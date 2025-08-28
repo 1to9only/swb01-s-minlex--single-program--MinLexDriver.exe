@@ -6709,7 +6709,7 @@ Module Program
         MinLexDriverStartDateTime = Now
         Dim fileinfo As New IO.FileInfo(InputFileFullPath)
         Try
-            streamReaderTest = System.IO.File.Open(InputFileFullPath, System.IO.FileMode.Open)
+            streamReaderTest = System.IO.File.Open(InputFileFullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read)
         Catch ex As Exception
             Console.WriteLine("Error, File Open for Input Exception. " & ex.Message)
             If PromptModeSw Then
