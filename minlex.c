@@ -658,7 +658,7 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
          RowWithCalcMiniRowCountCodeMinimumIx = -1;
          for (i = zstart; i <= 17; i++) // Identify and save the rows that match the minimum count, these are candidates for row1.
          {
-            //                                                                 (Note: All candidates will yield the same row1 after relabeling.)
+            // Note: All candidates will yield the same row1 after relabeling.
             if (CalcMiniRowCountCodeMinimum == CalcMiniRowCountCode[i])
             {
                RowWithCalcMiniRowCountCodeMinimumIx += 1;
@@ -1114,11 +1114,11 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
          }
 
          // Band1 Processing - Two cases:
-         //    1) MinLexBand1:     If all 18 rows and columns have at least one non-zero digit, then MinLex Band1 for all row1 candidates and eliminate Band1 row/column, permutation & relabel possibilities that do not yield the Band1 MinLex.
-         //    2) MinLexRows2and3: If all-zeros rows or columns exist, then MinLex Band1 for all row2 candidates for the all-zeros row and columns and eliminate Band1 row/column, permutation & relabel possibilities that do not yield the Band1 MinLex.
-         //    Results:            1) MinLexed Band1 solution candidates ready for rows 4 - 9 processing.
-         //                        2) Column (and stack) permutation Trackers used to reproduce each puzzle configuration that yields its Band1 MinLex.
-         //                        3) Relabel Trackers for each Band1 MinLex configuration.
+         // 1) MinLexBand1:     If all 18 rows and columns have at least one non-zero digit, then MinLex Band1 for all row1 candidates and eliminate Band1 row/column, permutation & relabel possibilities that do not yield the Band1 MinLex.
+         // 2) MinLexRows2and3: If all-zeros rows or columns exist, then MinLex Band1 for all row2 candidates for the all-zeros row and columns and eliminate Band1 row/column, permutation & relabel possibilities that do not yield the Band1 MinLex.
+         // Results: 1) MinLexed Band1 solution candidates ready for rows 4 - 9 processing.
+         //          2) Column (and stack) permutation Trackers used to reproduce each puzzle configuration that yields its Band1 MinLex.
+         //          3) Relabel Trackers for each Band1 MinLex configuration.
 
          StoppedJustifyingRow = 0;
          if (CalcMiniRowCountCodeMinimum > 0) // Start MinLexBand1 (Row1 not empty case)
@@ -2630,7 +2630,7 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
                case 3: // If next row1 candidate is row 3, ...
                   if (Row2Candidate == 1) // if the row2 candidate is row 1 then move rows 1, 2 and 3 to rows 2, 3 and 1,
                   {
-                     //    Array.ConstrainedCopy(TestBand1, 0, HoldGrid, 9, 18)
+                     //Array.ConstrainedCopy(TestBand1, 0, HoldGrid, 9, 18)
                      for (z = 0; z <= 17; z++)
                      {
                         HoldGrid[z + 9] = TestBand1[z];
@@ -2991,9 +2991,9 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
 
                MinLexCandidateSw = true;
 
-               //  Identify candidates for Row 4.
-               //  Row 4 Test: After right justification, test each row 4 to 9 with first non-zero digit position.
-               //              And then, if more than one choice compare relabled digit values.
+               // Identify candidates for Row 4.
+               // Row 4 Test: After right justification, test each row 4 to 9 with first non-zero digit position.
+               //             And then, if more than one choice compare relabled digit values.
                Row4TestFirstNonZeroDigitPositionInRow = -1;
                FindFirstNonZeroDigitInRow(4, StillJustifyingSw, TestBand1, FixedColumns, Row3DigitsRelabelWrk, FirstNonZeroDigitPositionInRow[4], FirstNonZeroDigitRelabeled[4]);
                if (Row4TestFirstNonZeroDigitPositionInRow < FirstNonZeroDigitPositionInRow[4])
@@ -3237,9 +3237,9 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
                         }
                         if (MinLexCandidateSw)
                         {
-                           //  Identify candidates for Row 5.
-                           //  Row 5 Test: After right justification, test each row 5 and 6 with first non-zero digit position and relabeled digit.
-                           //              And then, if more than one choice compare relabeled digit values.
+                           // Identify candidates for Row 5.
+                           // Row 5 Test: After right justification, test each row 5 and 6 with first non-zero digit position and relabeled digit.
+                           //             And then, if more than one choice compare relabeled digit values.
                            FindFirstNonZeroDigitInRow(5, StillJustifyingSw, TestBand2, FixedColumns, Row4DigitsRelabelWrk, FirstNonZeroDigitPositionInRow[5], FirstNonZeroDigitRelabeled[5]);
                            FindFirstNonZeroDigitInRow(6, StillJustifyingSw, TestBand2, FixedColumns, Row4DigitsRelabelWrk, FirstNonZeroDigitPositionInRow[6], FirstNonZeroDigitRelabeled[6]);
 
@@ -3488,8 +3488,8 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
                                              if (MinLexCandidateSw) // Process Band3
                                              {
                                                 // Identify candidates for Row 7.
-                                                //        Row 7 Test: After right justification, test each row 7 to 9 first non-zero digit position and relabeled digit.
-                                                //              And then, if more than one choice compare relabeled digit values.
+                                                // Row 7 Test: After right justification, test each row 7 to 9 first non-zero digit position and relabeled digit.
+                                                //             And then, if more than one choice compare relabeled digit values.
                                                 if (StillJustifyingSw && (row6stackpermutationix > 0 || row6columnpermutationix > 0))
                                                 {
                                                    //Array.ConstrainedCopy(Row6FixedColumns, 0, FixedColumns, 0, 9) ' Reset FixedColumns to after Row 6 setting.
@@ -3684,9 +3684,9 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
                                                          }
                                                          if (MinLexCandidateSw)
                                                          {
-                                                            //  Identify candidates for Row 8.
-                                                            //  Row 8 Test: After right justification, test each row 8 and 9 with first non-zero digit position.
-                                                            //              And then, if more than one choice compare relabeled digit values.
+                                                            // Identify candidates for Row 8.
+                                                            // Row 8 Test: After right justification, test each row 8 and 9 with first non-zero digit position.
+                                                            //             And then, if more than one choice compare relabeled digit values.
                                                             if (StillJustifyingSw && (row7stackpermutationix > 0 || row7columnpermutationix > 0))
                                                             {
                                                                //Array.ConstrainedCopy(Row7FixedColumns, 0, FixedColumns, 0, 9) ' Reset FixedColumns to after Row 7 setting.
@@ -4019,11 +4019,11 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
          ArrayConstrainedCopy(MinLexFullGridLocalReset, 0, MinLexGridLocal, 0, 81);
          // Evaluate then InputGrid to determine if first 12 of Minlex is: 123456789456 or 123456789457
          // It will be "type456" if these exists a pairing of the same 3 digits in any two minirows of diferent rows of any band, otherwise it will be "type457".
-         // For example if the following pattern is detected:   ------------------------------- where the digits 1, 2 and 4 occur in two different minirows,
-         // then the minlex will be of type456.                 | 2  1  4 | x  x  x | x  x  x |
-         //                                                     | x  x  x | 2  4  1 | x  x  x |
-         //                                                     | x  x  x | x  x  x | x  x  x |
-         //                                                     -------------------------------
+         // For example if the following pattern is detected: -------------------------------
+         // where the digits 1, 2 and 4 occur                 | 2  1  4 | x  x  x | x  x  x |
+         // in two different minirows, then                   | x  x  x | 2  4  1 | x  x  x |
+         // the minlex will be of type456.                    | x  x  x | x  x  x | x  x  x |
+         //                                                   -------------------------------
          // It is sufficient to check just two cases, for example minirow1 of row1 with minirow2 of row2 and minirow3 of row2, to detect a type456 Minlex.
          for (i = 0; i <= 5; i++)
          {
