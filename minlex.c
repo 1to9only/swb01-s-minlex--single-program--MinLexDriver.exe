@@ -1,7 +1,7 @@
 /* minlex.c - mostly converted from MinLexDriver.vb
 */
 const char *AUTHOR  = "1to9only";
-const char *VERSION = "2025.09.09";
+const char *VERSION = "2026.04.27";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,7 +20,7 @@ const char *VERSION = "2025.09.09";
 
 #define BATCH_SIZE   1296
 int  total = 0, count = 0;                // counts
-char sudokus[ BATCH_SIZE][ LINE_SIZE];    // sudokus
+char sudokus[ BATCH_SIZE][ LINE_SIZE*2];  // sudokus
 char canons[ BATCH_SIZE][ LINE_SIZE];     // canons
 
 int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBufferChr[], int ResultsBufferOffset);
@@ -38,7 +38,7 @@ void batch_minlex( void)
       if ( num < 0 ) { num = 0; }
       if ( num != 0 )
       {
-         MinLex9X9SR1( (char*)sudokus[ index*NUM_MINLEX], num*LINE_SIZE, (char*)canons[ index*NUM_MINLEX], 0);
+         MinLex9X9SR1( (char*)sudokus[ index*NUM_MINLEX], num*LINE_SIZE*2, (char*)canons[ index*NUM_MINLEX], 0);
       }
    }
 }
@@ -109,6 +109,7 @@ int main( int argc, char *argv[])
                   if ( !( ch == 0 || ch==' ' || ch=='_' || ch=='#' || (ch>='A' && ch<='Z') || (ch>='a' && ch<='z')) )
                   if ( strlen( sudoku) >= GRID_SIZE )
                   {
+                     strcpy( sudokus[ count], sudoku);
                      for (register int i=0; i<GRID_SIZE; i++ )
                      {
                         if ( sudoku[ i] >= SUDOKU_ONE && sudoku[ i] <= SUDOKU_MAX )
@@ -128,7 +129,7 @@ int main( int argc, char *argv[])
                         batch_minlex();
                         for ( register int i=0; i<count; i++ )
                         {
-                           printf( "%s\n", canons[ i]);
+                           printf( "%s%s\n", canons[ i], &sudokus[ i][ 81]);
                         }
                         count = 0;
                      }
@@ -142,7 +143,7 @@ int main( int argc, char *argv[])
                   batch_minlex();
                   for ( register int i=0; i<count; i++ )
                   {
-                     printf( "%s\n", canons[ i]);
+                     printf( "%s%s\n", canons[ i], &sudokus[ i][ 81]);
                   }
                   count = 0;
                }
@@ -184,6 +185,7 @@ void Switch3Columns120( int Puzzle[]); // 012 -> 120  rotate left
 void Switch3Columns201( int Puzzle[]); // 012 -> 201  rotate right
 void Switch3Columns786( int Puzzle[]); // 678 -> 786  rotate left
 void Switch3Columns867( int Puzzle[]); // 678 -> 867  rotate right
+
 
 static inline void ArrayClear( int array[], int index, int length)
 {
@@ -562,7 +564,7 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
    };
    int MiniRowOrderTracker[18][3];
 
-   int InputLineCount = InputBufferSize / 83;
+   int InputLineCount = InputBufferSize / (83*2);
    for (int inputgridix = 0; inputgridix < InputLineCount; inputgridix++)
    {
       for (int i=0; i<18; i++ ) { for (int j=0; j<3; j++ ) { OriginalMiniRowCount[ i][ j] = 0; } }
@@ -571,7 +573,7 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
       // Count non-zero digits in minirows for direct and transposed puzzle.
       int CluesCount = 0;
       ArrayClear(InputGrid, 0, 81);
-      int inputgridstart = inputgridix * 83;
+      int inputgridstart = inputgridix * (83*2);
          for (k = 0; k <= 80; k++) // Convert input char puzzle to integer array. Each non-zero (or non-period) character must be in range of 1 to 9.
          {
             char NextChr = InputGridBufferChr[inputgridstart + k];
@@ -4620,6 +4622,7 @@ int MinLex9X9SR1(char InputGridBufferChr[], int InputBufferSize, char MinLexBuff
 
    return 0; // successful run.
 } // Public Sub MinLex9X9SR1
+
 
 void RightJustifyRow(int Row, int Puzzle[], bool &StillJusfifyingSw, int FixedColumns[], int &StackPermutationCode, int &ColumnPermutationCode)
 {
